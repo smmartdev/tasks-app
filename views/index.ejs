@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Tasks</title>
+  <style>
+    /* Add your styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    main {
+      margin: 20px;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 10px;
+      background-color: #fff;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      color: red;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      text-decoration: underline;
+    }
+
+    span {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Daily Tasks</h1>
+    <a href="/logout" style="color: white; text-decoration: none; font-size: 16px;">Logout</a>
+  </header>
+
+  <main>
+    <form action="/add" method="POST">
+      <label for="description">Task Description:</label>
+      <input type="text" id="description" name="description" required>
+      <label>
+        <input type="checkbox" name="isPermanent"> Make Permanent
+      </label>
+      <button type="submit">Add Task</button>
+    </form>
+
+    <form action="/uncomplete-all" method="POST">
+      <button type="submit">Mark All as Uncompleted</button>
+    </form>
+
+    <ul>
+      <% tasks.forEach(task => { %>
+        <li>
+          <%= task.description %>
+          <% if (!task.isComplete) { %>
+            <form action="/complete/<%= task._id %>" method="POST" style="display:inline;">
+              <button type="submit">Complete</button>
+            </form>
+          <% } else { %>
+            <span>&#10004;</span>
+          <% } %>
+          <form action="/delete/<%= task._id %>" method="POST" style="display:inline;">
+            <button type="submit" class="delete-btn">X</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  </main>
+
+</body>
+</html>
