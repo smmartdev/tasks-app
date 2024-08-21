@@ -10,11 +10,12 @@ require('./config/passport');
 
 // Initialize Express app
 const app = express();
-
+const mongoURI ='mongodb+srv://smartdev989:ufwjQAtr6RpC6ikC@cluster0.eqkdr.mongodb.net/tasks-app?retryWrites=true&w=majority&appName=Cluster0';
+                //  mongodb+srv://smartdev989:ufwjQAtr6RpC6ikC@cluster0.eqkdr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/tasksApp', {
+    await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
