@@ -7,25 +7,24 @@ const passport = require('passport');
 const Task = require('./models/Task');
 const User = require('./models/User');
 require('./config/passport');
+require('dotenv').config();
+
 
 // Initialize Express app
 const app = express();
-const mongoURI ='mongodb+srv://smartdev989:ufwjQAtr6RpC6ikC@cluster0.eqkdr.mongodb.net/tasks-app?retryWrites=true&w=majority&appName=Cluster0';
-                //  mongodb+srv://smartdev989:ufwjQAtr6RpC6ikC@cluster0.eqkdr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+const DBURL = process.env.DBURL
+
 // Connect to MongoDB
-const connectDB = async () => {
+const connectDB = async (mongoURI) => {
   try {
-    await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(mongoURI);
     console.log('MongoDB connected');
   } catch (err) {
     console.error(err.message);
     process.exit(1);
   }
 };
-connectDB();
+connectDB(DBURL);
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
